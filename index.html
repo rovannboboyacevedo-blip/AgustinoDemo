@@ -1,0 +1,2138 @@
+<!DOCTYPE html>
+<!-- ================================================================
+     AugustinNOTES — index.html  (SELF-CONTAINED, STANDALONE)
+     ================================================================
+     This single file includes all CSS and JavaScript inline.
+     Open directly in any browser — no server or extra files needed.
+
+     For a multi-file project setup, use:
+       • style.css  — all CSS styles (companion file)
+       • script.js  — all JavaScript (companion file)
+     and replace the <style> and <script> blocks in this file with:
+       <link rel="stylesheet" href="style.css"/>  (in <head>)
+       <script src="script.js"></script>           (before </body>)
+     ================================================================ -->
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>AugustinNOTES</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+/* ================================================================
+   SECTION: STYLES — All CSS for AugustinNOTES
+   See style.css for the standalone version
+   ================================================================ */
+
+/* ── THEME TOKENS ─────────────────────────────────────────────────────────── */
+:root,[data-theme="dark"]{
+  --bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--surface3:#242424;
+  --border:#252525;--border2:#333;
+  --text:#f0f0f0;--text2:#aaa;--text3:#555;
+  --accent:#fff;--accent-fg:#000;
+  --danger:#e24b4a;--success:#1D9E75;--info:#378ADD;--warn:#d4920a;
+  --valid-bg:rgba(29,158,117,.12);--valid-br:rgba(29,158,117,.3);--valid-tx:#1D9E75;
+  --pend-bg:rgba(212,146,10,.1);--pend-br:rgba(212,146,10,.28);--pend-tx:#d4920a;
+  --cmt-bg:#141414;--cmt-br:#222;
+  --shadow:0 8px 32px rgba(0,0,0,.55);--shadow-sm:0 2px 8px rgba(0,0,0,.3);
+  --radius:10px;--radius-lg:14px;--sidebar:58px;--tr:.18s ease;
+}
+[data-theme="light"]{
+  --bg:#f0f2f5;--surface:#fff;--surface2:#f5f6f8;--surface3:#ebedf0;
+  --border:#dde0e5;--border2:#c8cdd4;
+  --text:#1a1d23;--text2:#5a6172;--text3:#9aa0ad;
+  --accent:#1a1d23;--accent-fg:#fff;
+  --danger:#d93025;--success:#177a56;--info:#1a6fd4;--warn:#b56f00;
+  --valid-bg:rgba(23,122,86,.1);--valid-br:rgba(23,122,86,.28);--valid-tx:#177a56;
+  --pend-bg:rgba(181,111,0,.1);--pend-br:rgba(181,111,0,.28);--pend-tx:#b56f00;
+  --cmt-bg:#f8f9fb;--cmt-br:#e4e7ec;
+  --shadow:0 8px 32px rgba(0,0,0,.12);--shadow-sm:0 2px 8px rgba(0,0,0,.06);
+}
+/* ── BASE ───────────────────────────────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--text);
+  font-family:'DM Sans','Segoe UI',system-ui,sans-serif;font-size:13.5px;overflow:hidden}
+.app{display:flex;height:100vh;overflow:hidden}
+/* ── SIDEBAR ──────────────────────────────────────────────────────────────── */
+.sidebar{width:var(--sidebar);min-width:var(--sidebar);height:100vh;
+  background:var(--surface);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;align-items:center;padding:14px 0 10px;gap:3px;z-index:10;
+  transition:background var(--tr),border-color var(--tr)}
+.logo{width:38px;height:38px;background:var(--accent);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:var(--accent-fg);
+  margin-bottom:12px;cursor:pointer;flex-shrink:0;user-select:none;
+  transition:transform var(--tr),box-shadow var(--tr)}
+.logo:hover{transform:scale(1.06);box-shadow:var(--shadow-sm)}
+.nav-btn{width:40px;height:40px;border-radius:10px;border:none;background:transparent;
+  color:var(--text3);cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all var(--tr);position:relative}
+.nav-btn:hover{background:var(--surface2);color:var(--text)}
+.nav-btn.active{background:var(--surface3);color:var(--text)}
+.nav-btn .tip,.theme-toggle .tip{position:absolute;left:calc(100% + 12px);top:50%;
+  transform:translateY(-50%);background:var(--surface3);border:1px solid var(--border2);
+  color:var(--text);font-size:11px;padding:5px 10px;border-radius:7px;white-space:nowrap;
+  pointer-events:none;opacity:0;transition:opacity .12s;z-index:9999;box-shadow:var(--shadow-sm)}
+.nav-btn:hover .tip,.theme-toggle:hover .tip{opacity:1}
+.sidebar-bot{margin-top:auto;display:flex;flex-direction:column;align-items:center;gap:3px}
+.theme-toggle{width:40px;height:40px;border-radius:10px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:17px;
+  transition:all var(--tr);position:relative}
+.theme-toggle:hover{background:var(--surface3);color:var(--text)}
+/* ── MAIN ─────────────────────────────────────────────────────────────────── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.topbar{height:52px;min-height:52px;background:var(--surface);
+  border-bottom:1px solid var(--border);display:flex;align-items:center;
+  justify-content:space-between;padding:0 22px;gap:14px;
+  transition:background var(--tr),border-color var(--tr)}
+.page-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;white-space:nowrap;flex-shrink:0}
+.search-wrap{flex:1;max-width:300px;display:flex;align-items:center;
+  background:var(--surface2);border:1px solid var(--border);border-radius:8px;
+  padding:0 12px;gap:8px;transition:border-color var(--tr)}
+.search-wrap:focus-within{border-color:var(--border2)}
+.search-wrap input{background:none;border:none;outline:none;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:12.5px;width:100%;padding:8px 0}
+.search-wrap input::placeholder{color:var(--text3)}
+.topbar-right{display:flex;align-items:center;gap:9px}
+.avatar{width:32px;height:32px;border-radius:50%;background:var(--surface3);
+  border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;cursor:pointer;color:var(--text);
+  transition:border-color var(--tr);flex-shrink:0}
+.avatar:hover{border-color:var(--text)}
+.icon-btn{width:32px;height:32px;border-radius:8px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--text2);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;font-size:14px;transition:all var(--tr)}
+.icon-btn:hover{background:var(--surface3);color:var(--text)}
+/* ── CONTENT ──────────────────────────────────────────────────────────────── */
+.content{flex:1;overflow-y:auto;padding:22px;
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.content::-webkit-scrollbar{width:5px}
+.content::-webkit-scrollbar-thumb{background:var(--border2);border-radius:5px}
+.page{display:none}.page.active{display:block}
+/* ── CARDS ────────────────────────────────────────────────────────────────── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:20px;transition:background var(--tr),border-color var(--tr)}
+.stat-card{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:15px 18px;display:flex;flex-direction:column;gap:4px;transition:all var(--tr)}
+.stat-card:hover{border-color:var(--border2);transform:translateY(-1px)}
+.stat-num{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;color:var(--text)}
+.stat-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+/* ── BUTTONS ──────────────────────────────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  border-radius:8px;border:1px solid var(--border2);background:var(--surface2);
+  color:var(--text);font-family:'DM Sans',sans-serif;font-size:12.5px;font-weight:500;
+  padding:7px 14px;cursor:pointer;transition:all var(--tr);white-space:nowrap;flex-shrink:0}
+.btn:hover{background:var(--surface3)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn-primary:hover{opacity:.86;background:var(--accent)}
+.btn-danger{background:transparent;color:var(--danger);border-color:var(--danger)}
+.btn-danger:hover{background:rgba(226,75,74,.08)}
+.btn-success{background:transparent;color:var(--success);border-color:var(--success)}
+.btn-success:hover{background:rgba(29,158,117,.08)}
+.btn-warn{background:transparent;color:var(--warn);border-color:var(--warn)}
+.btn-warn:hover{background:rgba(212,146,10,.08)}
+.btn-info{background:transparent;color:var(--info);border-color:var(--info)}
+.btn-sm{padding:4px 11px;font-size:11.5px}
+.btn-lg{padding:10px 22px;font-size:13.5px}
+.btn:disabled{opacity:.38;cursor:not-allowed;transform:none}
+/* ── BADGES ───────────────────────────────────────────────────────────────── */
+.badge{display:inline-flex;align-items:center;padding:2px 9px;border-radius:20px;
+  font-size:10.5px;font-weight:500;white-space:nowrap;
+  background:var(--surface3);color:var(--text2);border:1px solid var(--border2)}
+.valid-badge{display:inline-flex;align-items:center;gap:5px;
+  background:var(--valid-bg);border:1px solid var(--valid-br);color:var(--valid-tx);
+  border-radius:20px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap}
+.pend-badge{display:inline-flex;align-items:center;gap:5px;
+  background:var(--pend-bg);border:1px solid var(--pend-br);color:var(--pend-tx);
+  border-radius:20px;padding:3px 10px;font-size:11px;font-weight:500;white-space:nowrap}
+.stars{color:#f0a500;font-size:12px;letter-spacing:1px}
+/* ── TABS ─────────────────────────────────────────────────────────────────── */
+.tab-bar{display:flex;gap:2px;background:var(--surface2);border-radius:10px;
+  padding:3px;border:1px solid var(--border);width:fit-content;flex-wrap:wrap}
+.tab{padding:6px 15px;border-radius:8px;border:none;background:transparent;
+  color:var(--text2);font-family:'DM Sans',sans-serif;font-size:12px;
+  cursor:pointer;transition:all var(--tr)}
+.tab.active{background:var(--surface3);color:var(--text);font-weight:600}
+.tab:hover:not(.active){color:var(--text)}
+/* ── NOTE CARDS ───────────────────────────────────────────────────────────── */
+.note-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:14px 18px;
+  display:flex;align-items:flex-start;gap:12px;cursor:pointer;
+  transition:all var(--tr)}
+.note-card:hover{border-color:var(--border2);background:var(--surface2);transform:translateY(-1px);box-shadow:var(--shadow-sm)}
+.note-info{flex:1;min-width:0}
+.note-title{font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.note-sub{font-size:11.5px;color:var(--text3);margin-top:2px}
+.note-badges-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:7px;align-items:center}
+/* ── TABLE ────────────────────────────────────────────────────────────────── */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+thead{background:var(--surface2)}
+th{padding:10px 15px;text-align:left;color:var(--text3);font-weight:500;
+  font-size:11px;text-transform:uppercase;letter-spacing:.05em;border-bottom:1px solid var(--border)}
+td{padding:11px 15px;border-bottom:1px solid var(--border);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface2);transition:background .12s}
+.actions-cell{display:flex;gap:5px;align-items:center;flex-wrap:wrap}
+/* ── UPLOAD ───────────────────────────────────────────────────────────────── */
+.upload-zone{border:2px dashed var(--border2);border-radius:var(--radius-lg);
+  padding:44px 24px;text-align:center;cursor:pointer;
+  transition:all var(--tr);background:var(--surface2)}
+.upload-zone:hover,.upload-zone.over{border-color:var(--text2);background:var(--surface3)}
+.upload-zone svg{width:52px;height:52px;color:var(--text3);margin-bottom:14px}
+.upload-zone h3{font-family:'Space Grotesk',sans-serif;font-size:17px;margin-bottom:7px}
+.upload-zone p{font-size:12.5px;color:var(--text2)}
+.prog-bar{height:4px;background:var(--surface3);border-radius:2px;overflow:hidden;margin-top:12px}
+.prog-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s ease}
+/* ── FORMS ────────────────────────────────────────────────────────────────── */
+.fc{width:100%;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:8px;padding:9px 13px;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:12.5px;outline:none;
+  transition:border-color var(--tr)}
+.fc:focus{border-color:var(--text2)}
+.fc::placeholder{color:var(--text3)}
+select.fc{cursor:pointer}
+/* ── MODAL ────────────────────────────────────────────────────────────────── */
+.backdrop{position:fixed;inset:0;background:rgba(0,0,0,.72);
+  display:flex;align-items:center;justify-content:center;z-index:500;padding:20px;
+  backdrop-filter:blur(4px)}
+.backdrop.hidden{display:none}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:16px;
+  width:100%;max-width:720px;max-height:88vh;overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:var(--shadow)}
+.modal-hdr{padding:18px 22px;border-bottom:1px solid var(--border);
+  display:flex;align-items:flex-start;gap:12px}
+.modal-title{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;flex:1}
+.modal-body{padding:20px 22px;overflow-y:auto;flex:1;
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.modal-body::-webkit-scrollbar{width:4px}
+.modal-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+.modal-foot{padding:13px 22px;border-top:1px solid var(--border);
+  display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.close-btn{width:28px;height:28px;border-radius:7px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--text2);cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:15px;transition:all var(--tr)}
+.close-btn:hover{background:var(--surface3);color:var(--text)}
+/* ── NOTE DOC ─────────────────────────────────────────────────────────────── */
+.note-doc-shell{background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;overflow:hidden;margin-bottom:16px}
+.note-doc{padding:22px 24px;font-size:12.5px;line-height:1.85;color:var(--text);
+  font-family:'DM Sans',sans-serif;white-space:pre-wrap;
+  overflow-y:auto;max-height:260px;
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
+.note-doc::-webkit-scrollbar{width:4px}
+.note-doc::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
+/* ── VALIDATION PANEL ─────────────────────────────────────────────────────── */
+.valid-panel{border-radius:10px;padding:14px 16px;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.valid-panel.ok{background:var(--valid-bg);border:1px solid var(--valid-br)}
+.valid-panel.pend{background:var(--pend-bg);border:1px solid var(--pend-br)}
+.valid-icon{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0}
+.valid-icon.ok-bg{background:var(--valid-bg)}
+.valid-icon.pend-bg{background:var(--pend-bg)}
+/* ── COMMENTS ─────────────────────────────────────────────────────────────── */
+.cmt-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cmt-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600}
+.cmt-count{font-size:11px;color:var(--text3);background:var(--surface3);
+  border-radius:12px;padding:2px 9px;border:1px solid var(--border)}
+.cmt-input-row{display:flex;gap:8px;margin-bottom:14px;align-items:flex-end}
+.cmt-input{flex:1;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:8px;padding:8px 13px;color:var(--text);font-family:'DM Sans',sans-serif;
+  font-size:12.5px;outline:none;resize:none;min-height:38px;max-height:90px;
+  line-height:1.5;transition:border-color var(--tr)}
+.cmt-input:focus{border-color:var(--border2)}
+.cmt-input::placeholder{color:var(--text3)}
+.cmt-list{display:flex;flex-direction:column;gap:9px}
+.cmt-item{background:var(--cmt-bg);border:1px solid var(--cmt-br);
+  border-radius:10px;padding:11px 14px;transition:all var(--tr)}
+.cmt-item:hover{border-color:var(--border2)}
+.cmt-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.cmt-user-wrap{display:flex;align-items:center;gap:9px}
+.cmt-avatar{width:26px;height:26px;border-radius:50%;background:var(--surface3);
+  border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;color:var(--text2);flex-shrink:0}
+.cmt-user{font-weight:600;font-size:12px;color:var(--text2)}
+.cmt-ts{font-size:10.5px;color:var(--text3)}
+.cmt-text{font-size:12.5px;color:var(--text);line-height:1.6;margin-bottom:7px}
+.cmt-actions{display:flex;align-items:center;gap:6px}
+.like-btn{display:inline-flex;align-items:center;gap:4px;background:none;border:none;
+  color:var(--text3);font-size:11.5px;cursor:pointer;padding:3px 7px;border-radius:6px;
+  transition:all var(--tr)}
+.like-btn:hover{background:var(--surface3);color:var(--info)}
+.like-btn.liked{color:var(--info)}
+.del-cmt{display:inline-flex;align-items:center;background:none;border:none;
+  color:var(--text3);font-size:11px;cursor:pointer;padding:3px 7px;border-radius:6px;
+  transition:all var(--tr)}
+.del-cmt:hover{background:rgba(226,75,74,.1);color:var(--danger)}
+.no-cmt{text-align:center;padding:22px;color:var(--text3);font-size:12.5px}
+/* ── PROFILE ──────────────────────────────────────────────────────────────── */
+.prof-cover{height:130px;
+  background:linear-gradient(135deg,var(--surface2) 0%,var(--surface3) 100%);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;position:relative;
+  overflow:hidden;display:flex;align-items:flex-end;padding:14px}
+.prof-avatar{width:64px;height:64px;border-radius:50%;background:var(--surface3);
+  border:3px solid var(--surface);display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;
+  margin-top:-32px;position:relative;z-index:2;color:var(--text);flex-shrink:0}
+.prof-name{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:700}
+.prof-college{font-size:11.5px;color:var(--text3);margin-top:4px;line-height:1.6}
+.quick-link{display:flex;align-items:center;justify-content:space-between;
+  background:var(--surface2);border:1px solid var(--border);border-radius:10px;
+  padding:13px 17px;cursor:pointer;transition:all var(--tr)}
+.quick-link:hover{background:var(--surface3);border-color:var(--border2);transform:translateY(-1px)}
+/* ── SETTINGS ─────────────────────────────────────────────────────────────── */
+.set-row{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;border-bottom:1px solid var(--border)}
+.set-row:last-child{border-bottom:none}
+.set-label{font-size:13px;font-weight:500}
+.set-desc{font-size:11.5px;color:var(--text3);margin-top:2px}
+.toggle{position:relative;width:38px;height:22px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.tslider{position:absolute;inset:0;background:var(--surface3);border-radius:11px;
+  cursor:pointer;transition:background var(--tr)}
+.tslider::before{content:'';position:absolute;width:16px;height:16px;
+  border-radius:50%;background:var(--text2);top:3px;left:3px;transition:transform var(--tr)}
+.toggle input:checked+.tslider{background:var(--accent)}
+.toggle input:checked+.tslider::before{transform:translateX(16px);background:var(--accent-fg)}
+/* ── LAYOUT HELPERS ───────────────────────────────────────────────────────── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:600}
+/* ── TOAST ────────────────────────────────────────────────────────────────── */
+#toast{position:fixed;bottom:22px;right:22px;background:var(--surface3);
+  border:1px solid var(--border2);color:var(--text);font-size:12.5px;
+  padding:10px 17px;border-radius:10px;z-index:9999;
+  transform:translateY(90px);opacity:0;transition:all .28s ease;
+  pointer-events:none;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow)}
+#toast.show{transform:translateY(0);opacity:1}
+/* ── ANIMATIONS ───────────────────────────────────────────────────────────── */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spinner{width:15px;height:15px;border:2px solid var(--border2);border-top-color:var(--accent);
+  border-radius:50%;animation:spin .7s linear infinite;display:inline-block;
+  vertical-align:middle;margin-right:6px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp .22s ease}
+@media(max-width:680px){.grid-2,.grid-4{grid-template-columns:1fr}}
+
+/* ── AI STUDY ─────────────────────────────────────────────────────────────── */
+.ai-select-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.ai-select-row .fc{flex:1;min-width:0}
+.ai-tab-bar{display:flex;gap:0;border:1px solid var(--border);border-radius:10px;
+  overflow:hidden;margin-bottom:18px;background:var(--surface2)}
+.ai-tab{flex:1;padding:9px 14px;border:none;border-right:1px solid var(--border);
+  background:transparent;color:var(--text2);font-family:'DM Sans',sans-serif;
+  font-size:12.5px;font-weight:500;cursor:pointer;transition:all var(--tr)}
+.ai-tab:last-child{border-right:none}
+.ai-tab.active{background:var(--surface3);color:var(--text);font-weight:600}
+.ai-tab:hover:not(.active){background:var(--surface3);color:var(--text)}
+/* Reviewer */
+.reviewer-shell{display:none}.reviewer-shell.active{display:block}
+.reviewer-section{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:18px 20px;margin-bottom:14px}
+.reviewer-section-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:12px;
+  color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;
+  display:flex;align-items:center;gap:7px}
+.reviewer-section-title span{width:6px;height:6px;border-radius:50%;
+  background:var(--accent);display:inline-block;flex-shrink:0}
+.def-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}
+.def-item:last-child{border-bottom:none}
+.def-term{font-weight:600;font-size:12.5px;min-width:140px;flex-shrink:0;color:var(--text)}
+.def-meaning{font-size:12.5px;color:var(--text2);line-height:1.65}
+.highlight-item{display:flex;gap:10px;align-items:flex-start;padding:8px 0;
+  border-bottom:1px solid var(--border)}
+.highlight-item:last-child{border-bottom:none}
+.highlight-num{width:22px;height:22px;border-radius:50%;background:var(--surface3);
+  border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;flex-shrink:0;color:var(--text2)}
+.highlight-text{font-size:12.5px;color:var(--text2);line-height:1.65}
+.summary-block{font-size:12.5px;color:var(--text2);line-height:1.85;
+  background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;padding:14px 16px;white-space:pre-line}
+/* Quizlet / Flashcards */
+.quizlet-shell{display:none}.quizlet-shell.active{display:block}
+.quizlet-header{display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.quizlet-progress{font-size:12px;color:var(--text3)}
+.quizlet-nav{display:flex;gap:8px;align-items:center}
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:14px;margin-bottom:20px}
+.flashcard{position:relative;height:180px;cursor:pointer;perspective:800px}
+.flashcard-inner{position:absolute;inset:0;transform-style:preserve-3d;
+  transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.flashcard.flipped .flashcard-inner{transform:rotateY(180deg)}
+.flashcard-front,.flashcard-back{
+  position:absolute;inset:0;border-radius:var(--radius-lg);
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:18px;text-align:center;border:1px solid var(--border)}
+.flashcard-front{background:var(--surface)}
+.flashcard-back{background:var(--surface2);border-color:var(--border2);
+  transform:rotateY(180deg)}
+.flashcard:hover .flashcard-front,.flashcard:hover .flashcard-back{
+  border-color:var(--border2);box-shadow:var(--shadow-sm)}
+.fc-label{font-size:10px;color:var(--text3);text-transform:uppercase;
+  letter-spacing:.07em;margin-bottom:8px;font-weight:600}
+.fc-question{font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:13px;color:var(--text);line-height:1.5}
+.fc-answer{font-size:12.5px;color:var(--text2);line-height:1.6}
+.fc-hint{position:absolute;bottom:11px;right:14px;font-size:10px;color:var(--text3)}
+/* Study mode big card */
+.study-card-wrap{display:flex;flex-direction:column;align-items:center;gap:16px;padding:8px 0}
+.study-card-big{width:100%;max-width:520px;height:240px;cursor:pointer;
+  perspective:800px;margin:0 auto}
+.study-card-big .flashcard-inner{transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.study-card-big .flashcard-front,.study-card-big .flashcard-back{border-radius:var(--radius-lg)}
+.study-card-big .fc-question{font-size:16px}
+.study-card-big .fc-answer{font-size:14px}
+.study-nav-row{display:flex;align-items:center;gap:14px}
+.study-counter{font-family:'Space Grotesk',sans-serif;font-size:14px;
+  font-weight:600;color:var(--text2)}
+/* AI skeleton */
+.ai-loading{display:none;flex-direction:column;gap:10px;padding:10px 0}
+.ai-loading.active{display:flex}
+.skel{height:14px;background:linear-gradient(90deg,var(--surface2) 25%,
+  var(--surface3) 50%,var(--surface2) 75%);background-size:200% 100%;
+  border-radius:6px;animation:skelAnim 1.4s linear infinite}
+.skel-h{height:18px;width:40%}
+.skel-p{width:100%}
+.skel-p2{width:84%}
+.skel-p3{width:91%}
+@keyframes skelAnim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.ai-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:52px 20px;color:var(--text3);text-align:center;gap:12px}
+.ai-empty svg{opacity:.3}
+.ai-empty p{font-size:13px;max-width:300px;line-height:1.65;margin-top:2px}
+.ai-empty strong{color:var(--text2);font-size:14px;display:block;margin-bottom:3px}
+
+/* ── LOGIN ────────────────────────────────────────────────────────────────── */
+.login-screen{
+  position:fixed;inset:0;z-index:2000;
+  background:var(--bg);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px;transition:background var(--tr);
+}
+.login-screen.hidden{display:none}
+.login-glow{
+  position:absolute;width:520px;height:520px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.04) 0%,transparent 70%);
+  pointer-events:none;top:50%;left:50%;transform:translate(-50%,-50%);
+}
+.login-box{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:18px;padding:40px 38px 36px;width:100%;max-width:400px;
+  text-align:center;box-shadow:var(--shadow);position:relative;z-index:1;
+}
+.login-logo{
+  width:54px;height:54px;background:var(--accent);border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px;
+  color:var(--accent-fg);margin:0 auto 20px;
+  box-shadow:0 0 0 6px rgba(255,255,255,.06);
+}
+.login-box h2{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:700;margin-bottom:6px}
+.login-box p{font-size:13px;color:var(--text3);margin-bottom:28px}
+.login-field{text-align:left;margin-bottom:14px}
+.login-field label{display:block;font-size:12px;color:var(--text3);font-weight:500;margin-bottom:5px}
+.login-field input{
+  width:100%;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:9px;padding:10px 14px;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:13px;outline:none;
+  transition:border-color var(--tr);
+}
+.login-field input:focus{border-color:var(--text2)}
+.login-field input::placeholder{color:var(--text3)}
+.login-err{font-size:12px;color:var(--danger);margin-top:-6px;margin-bottom:12px;
+  display:none;text-align:left;padding-left:2px}
+.login-btn{
+  width:100%;margin-top:6px;padding:11px;font-size:14px;font-weight:600;
+  border-radius:9px;border:none;background:var(--accent);color:var(--accent-fg);
+  cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity var(--tr);
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.login-btn:hover{opacity:.88}
+.login-btn:active{transform:scale(.98)}
+.login-divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--text3);font-size:12px}
+.login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.login-demo{font-size:12px;color:var(--text3);background:var(--surface2);
+  border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:left;line-height:1.8}
+.login-demo strong{color:var(--text2)}
+.login-footer{margin-top:18px;font-size:12px;color:var(--text3)}
+.login-footer a{color:var(--text2);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.login-footer a:hover{color:var(--text)}
+</style>
+</head>
+<body>
+<!-- ════ LOGIN SCREEN ════════════════════════════════════════════════════════ -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-glow"></div>
+  <div class="login-box">
+    <div class="login-logo">N</div>
+    <h2>Hello, Augustinian!</h2>
+    <p>Sign in to access your notes</p>
+
+    <div class="login-field">
+      <label>Student ID / Email</label>
+      <input id="loginEmail" type="text" placeholder="student@adnu.edu.ph" value="student@adnu.edu.ph"
+        onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input id="loginPass" type="password" placeholder="••••••••" value="password123"
+        onkeydown="if(event.key==='Enter')doLogin()"/>
+    </div>
+    <div class="login-err" id="loginErr">Invalid credentials. Please try again.</div>
+
+    <button class="login-btn" onclick="doLogin()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+      Log In
+    </button>
+
+    <div class="login-divider">demo credentials</div>
+    <div class="login-demo">
+      <strong>Email:</strong> student@adnu.edu.ph<br/>
+      <strong>Password:</strong> password123
+    </div>
+
+    <div class="login-footer">
+      Don't have an account? <a onclick="toast('Registration is disabled in demo mode','info')">Register here</a>
+      &nbsp;·&nbsp;
+      <a onclick="toast('Reset link sent to your email','success')">Forgot password?</a>
+    </div>
+  </div>
+</div>
+
+<div class="app" id="appShell" style="display:none">
+
+<!-- ════ SIDEBAR ════════════════════════════════════════════════════════════ -->
+<aside class="sidebar">
+  <div class="logo" onclick="go('home')">N</div>
+  <button class="nav-btn active" id="nav-home" onclick="go('home')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span class="tip">Home</span>
+  </button>
+  <button class="nav-btn" id="nav-dashboard" onclick="go('dashboard')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+    <span class="tip">Dashboard</span>
+  </button>
+  <button class="nav-btn" id="nav-upload" onclick="go('upload')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+    <span class="tip">Upload</span>
+  </button>
+  <button class="nav-btn" id="nav-study" onclick="go('study')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    <span class="tip">AI Study</span>
+  </button>
+  <button class="nav-btn" id="nav-profile" onclick="go('profile')">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span class="tip">Profile</span>
+  </button>
+  <div class="sidebar-bot">
+    <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️<span class="tip" id="themeTip">Switch to Light</span></button>
+    <button class="nav-btn" id="nav-settings" onclick="go('settings')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span class="tip">Settings</span>
+    </button>
+    <button class="nav-btn" onclick="doLogout()" style="color:var(--danger)">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <span class="tip">Log Out</span>
+    </button>
+  </div>
+</aside>
+
+<!-- ════ MAIN ════════════════════════════════════════════════════════════════ -->
+<main class="main">
+  <div class="topbar">
+    <div class="page-title" id="pageTitle">Home</div>
+    <div class="search-wrap">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" placeholder="Search notes, subjects, authors…" oninput="onSearch()"/>
+    </div>
+    <div class="topbar-right">
+      <button class="icon-btn" title="Notifications" onclick="toast('No new notifications','info')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      </button>
+      <div class="avatar" id="avtr" onclick="go('profile')">MA</div>
+    </div>
+  </div>
+
+  <div class="content" id="mainContent">
+
+    <!-- ══ HOME ══════════════════════════════════════════════════════════════ -->
+    <div class="page active" id="page-home">
+      <div style="margin-bottom:20px">
+        <h1 style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:700">Hello, Augustinian! 👋</h1>
+        <p style="color:var(--text2);font-size:13px;margin-top:4px">Explore, save, and share lecture notes with your batchmates.</p>
+      </div>
+      <div class="grid-4" style="margin-bottom:20px">
+        <div class="stat-card"><div class="stat-num" id="st-saved">2</div><div class="stat-label">Notes Saved</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-shared">7</div><div class="stat-label">Notes Shared</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-valid">2</div><div class="stat-label">Validated</div></div>
+        <div class="stat-card"><div class="stat-num" id="st-cmts">6</div><div class="stat-label">Comments</div></div>
+      </div>
+      <div class="card" style="margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+        <div>
+          <div style="font-weight:600">Add Attachments</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:3px">Upload lecture notes — PDF, DOC, PPT · max 200 MB</div>
+        </div>
+        <button class="btn btn-primary" onclick="go('upload')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+          UPLOAD
+        </button>
+      </div>
+      <div class="section-hdr">
+        <div class="tab-bar">
+          <button class="tab active" onclick="switchTab(this,'all')">All Courses</button>
+          <button class="tab" onclick="switchTab(this,'validated')">✅ Validated</button>
+          <button class="tab" onclick="switchTab(this,'fav')">Saved</button>
+          <button class="tab" onclick="switchTab(this,'top')">Top Rated</button>
+        </div>
+        <button class="btn btn-sm" onclick="toast('Filters coming soon','info')">⚙ Filter</button>
+      </div>
+      <div id="notes-list" style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px"></div>
+      <div class="section-hdr"><div class="section-title">Recent Notes</div><button class="btn btn-sm" onclick="go('dashboard')">View All</button></div>
+      <div id="recent-list" style="display:flex;flex-direction:column;gap:10px"></div>
+    </div>
+
+    <!-- ══ DASHBOARD ══════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-dashboard">
+      <div style="margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div><h2 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700">Dashboard</h2>
+        <p style="font-size:12px;color:var(--text3);margin-top:2px">Manage all your saved and published notes</p></div>
+        <button class="btn btn-primary" onclick="go('upload')">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Note
+        </button>
+      </div>
+      <div class="card" style="padding:0">
+        <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+          <span style="font-weight:500">Recently Saved Notes</span>
+          <span id="note-count" style="font-size:12px;color:var(--text3)">4 notes</span>
+        </div>
+        <div class="table-wrap" style="border:none;border-radius:0 0 var(--radius-lg) var(--radius-lg)">
+          <table><thead><tr>
+            <th style="width:28px">#</th><th>File Name</th><th>Publisher</th>
+            <th>Validation</th><th>Comments</th><th>Actions</th>
+          </tr></thead><tbody id="dash-tbody"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ UPLOAD ══════════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-upload">
+      <div style="margin-bottom:18px"><h2 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700">Upload Notes</h2>
+      <p style="font-size:12px;color:var(--text3);margin-top:2px">Share your lecture notes with your batchmates</p></div>
+      <div class="grid-2" style="gap:20px;align-items:start">
+        <div>
+          <div class="upload-zone" id="dropZone"
+            onclick="document.getElementById('fileInput').click()"
+            ondragover="event.preventDefault();this.classList.add('over')"
+            ondragleave="this.classList.remove('over')"
+            ondrop="handleDrop(event)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg>
+            <h3>Add Attachments</h3>
+            <p>Click to browse or drag &amp; drop here<br/>Max file size: <strong>200 MB</strong></p>
+            <div id="up-fname" style="margin-top:12px;font-size:12px;color:var(--text2)"></div>
+            <div class="prog-bar" id="prog-wrap" style="display:none"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+          </div>
+          <input id="fileInput" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" style="display:none" onchange="fileSelected(this)"/>
+          <button class="btn btn-primary btn-lg" style="width:100%;margin-top:14px" id="upBtn" onclick="startUpload()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+            UPLOAD FILE
+          </button>
+        </div>
+        <div>
+          <div class="card">
+            <div style="font-weight:600;margin-bottom:14px">File Details</div>
+            <div style="margin-bottom:12px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Note Title *</label>
+            <input class="fc" id="noteTitle" placeholder="e.g. ITFE Module 7 Notes"/></div>
+            <div style="margin-bottom:12px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Subject / Course</label>
+            <select class="fc" id="noteSubject">
+              <option value="">Select subject…</option>
+              <option>ITFE – IT Fundamentals</option>
+              <option>IT 333 – Software Engineering</option>
+              <option>IT 401 – Networks</option>
+              <option>APDEV – App Development</option>
+              <option>EXAM REVIEW</option>
+            </select></div>
+            <div style="margin-bottom:14px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Visibility</label>
+            <select class="fc" id="noteVis">
+              <option>Public – visible to everyone</option>
+              <option>Friends only</option>
+              <option>Private – only me</option>
+            </select></div>
+            <div style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:12px;color:var(--text3);line-height:1.75">
+              <strong style="color:var(--text2)">Guidelines:</strong><br/>
+              • Accepted: PDF, DOC, DOCX, PPT, PPTX<br/>
+              • Max size: 200 MB · No pirated material<br/>
+              • Notes can be submitted for professor validation
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ AI STUDY ══════════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-study">
+      <div style="margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+        <div>
+          <h2 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700">✨ AI Study Assistant</h2>
+          <p style="font-size:12px;color:var(--text3);margin-top:2px">Generate reviewers, flashcards &amp; summaries powered by AI — pick any module below</p>
+        </div>
+      </div>
+
+      <!-- Module selector -->
+      <div class="card" style="margin-bottom:16px">
+        <div style="font-weight:600;font-size:13px;margin-bottom:12px">Select a Module</div>
+        <div class="ai-select-row">
+          <select class="fc" id="study-note-select" onchange="onStudyNoteSelect()">
+            <option value="">Choose a note / module…</option>
+          </select>
+          <button class="btn" onclick="study_refreshNoteSelector();toast('Module list refreshed','info')">↺</button>
+        </div>
+        <div id="study-selected-info" style="display:none;background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 14px">
+          <div style="font-weight:600;font-size:13px" id="study-sel-title">—</div>
+          <div style="color:var(--text3);font-size:11.5px;margin-top:3px" id="study-sel-meta">—</div>
+        </div>
+      </div>
+
+      <!-- Action row -->
+      <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-primary" id="btn-gen-reviewer" onclick="generateReviewer()" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Generate Reviewer
+        </button>
+        <button class="btn" id="btn-gen-quizlet" onclick="generateQuizlet()" disabled>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Generate Quizlet
+        </button>
+        <button class="btn btn-sm" style="margin-left:auto" onclick="clearStudy()">✕ Clear</button>
+      </div>
+
+      <!-- Loading skeleton -->
+      <div class="ai-loading" id="ai-loading">
+        <div class="skel skel-h"></div>
+        <div class="skel skel-p" style="margin-top:6px"></div>
+        <div class="skel skel-p2"></div>
+        <div class="skel skel-p3"></div>
+        <div class="skel skel-p" style="margin-top:10px"></div>
+        <div class="skel skel-p2"></div>
+        <div class="skel skel-p3"></div>
+        <div class="skel skel-p"></div>
+      </div>
+
+      <!-- Results -->
+      <div id="study-results" style="display:none">
+        <div class="ai-tab-bar">
+          <button class="ai-tab active" id="stab-reviewer" onclick="switchStudyTab('reviewer')">📋 Reviewer</button>
+          <button class="ai-tab" id="stab-quizlet" onclick="switchStudyTab('quizlet')">🃏 Quizlet</button>
+          <button class="ai-tab" id="stab-study" onclick="switchStudyTab('study')">🎓 Study Mode</button>
+        </div>
+
+        <!-- REVIEWER TAB -->
+        <div class="reviewer-shell active" id="reviewer-shell">
+          <div id="reviewer-content"></div>
+        </div>
+
+        <!-- QUIZLET TAB -->
+        <div class="quizlet-shell" id="quizlet-shell">
+          <div class="quizlet-header">
+            <div>
+              <span style="font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700" id="qz-count"></span>
+              <span class="quizlet-progress" id="qz-progress" style="margin-left:10px"></span>
+            </div>
+            <div class="quizlet-nav">
+              <button class="btn btn-sm" onclick="flipAllCards()">Flip All</button>
+              <button class="btn btn-sm" onclick="shuffleCards()">🔀 Shuffle</button>
+            </div>
+          </div>
+          <div class="cards-grid" id="cards-grid"></div>
+        </div>
+
+        <!-- STUDY MODE TAB -->
+        <div class="quizlet-shell" id="study-shell">
+          <div class="study-card-wrap">
+            <div style="font-size:12px;color:var(--text3)">Click the card to reveal the answer</div>
+            <div class="study-card-big flashcard" id="study-big-card" onclick="flipStudyCard()">
+              <div class="flashcard-inner">
+                <div class="flashcard-front">
+                  <div class="fc-label">Question</div>
+                  <div class="fc-question" id="study-q-text">—</div>
+                </div>
+                <div class="flashcard-back">
+                  <div class="fc-label">Answer</div>
+                  <div class="fc-answer" id="study-a-text">—</div>
+                </div>
+              </div>
+            </div>
+            <div class="study-nav-row">
+              <button class="btn" onclick="studyPrev()">◀ Prev</button>
+              <div class="study-counter" id="study-counter">1 / 1</div>
+              <button class="btn btn-primary" onclick="studyNext()">Next ▶</button>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:4px">
+              <button class="btn btn-sm btn-success" onclick="markKnown()">✓ Got it</button>
+              <button class="btn btn-sm btn-warn" onclick="markUnknown()">↺ Review again</button>
+            </div>
+            <div style="font-size:11.5px;color:var(--text3)" id="study-score-line"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div class="ai-empty" id="study-empty">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <div>
+          <strong>AI Study Assistant</strong>
+          <p>Select a module above, then click <em>Generate Reviewer</em> for a study guide with key definitions &amp; highlights, or <em>Generate Quizlet</em> for interactive flashcards.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PROFILE ══════════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-profile">
+      <div class="card" style="padding:0;overflow:hidden">
+        <div class="prof-cover">
+          <button class="btn btn-sm" style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,.4);border-color:rgba(255,255,255,.2)" onclick="toast('Cover photo updated','success')">Change Cover</button>
+        </div>
+        <div style="padding:0 22px 22px">
+          <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:12px">
+            <div style="display:flex;align-items:flex-end;gap:16px">
+              <div class="prof-avatar" id="profAvatar">MA</div>
+              <div style="padding-bottom:4px">
+                <div class="prof-name" id="profName">Mhike Aleen A. Gacusan</div>
+                <div class="prof-college">COLLEGE OF LIBERAL ARTS, SCIENCE &amp; EDUCATION<br/>Bachelor of Science Information &amp; Technology</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <button class="btn" onclick="openEditModal()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Edit Profile
+              </button>
+              <button class="btn" onclick="go('settings')">Settings</button>
+            </div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0 18px">
+            <div class="stat-card"><div class="stat-num" id="ps-saved">2</div><div class="stat-label">Saved</div></div>
+            <div class="stat-card"><div class="stat-num" id="ps-shared">7</div><div class="stat-label">Shared</div></div>
+            <div class="stat-card"><div class="stat-num" id="ps-valid">2</div><div class="stat-label">Validated</div></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div class="quick-link" onclick="go('home');switchTab(document.querySelector('[onclick*=validated]'),'validated')">
+              <span>✅ View Validated Notes</span><span style="color:var(--text3);font-size:16px">+</span>
+            </div>
+            <div class="quick-link" onclick="shareProfile()">
+              <span>📤 Share My Profile</span><span style="color:var(--text3);font-size:16px">+</span>
+            </div>
+            <div class="quick-link" onclick="go('upload')">
+              <span>📁 Upload New Note</span><span style="color:var(--text3);font-size:16px">+</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SETTINGS ══════════════════════════════════════════════════════════════ -->
+    <div class="page" id="page-settings">
+      <div style="margin-bottom:18px"><h2 style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700">Settings</h2></div>
+
+      <!-- Theme -->
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Appearance</div>
+        <div class="set-row" style="border-bottom:none">
+          <div><div class="set-label">Color Theme</div><div class="set-desc">Choose between dark and light mode</div></div>
+          <div style="display:flex;gap:8px">
+            <button class="btn btn-sm btn-primary" id="btn-dark" onclick="setTheme('dark')">🌙 Dark</button>
+            <button class="btn btn-sm" id="btn-light" onclick="setTheme('light')">☀️ Light</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Notifications</div>
+        <div class="set-row"><div><div class="set-label">Email Notifications</div><div class="set-desc">Get updates when someone saves your note</div></div>
+        <label class="toggle"><input type="checkbox" checked onchange="setToggle(this,'Email notifications')"><div class="tslider"></div></label></div>
+        <div class="set-row"><div><div class="set-label">Comment Notifications</div><div class="set-desc">Get notified when someone comments on your note</div></div>
+        <label class="toggle"><input type="checkbox" checked onchange="setToggle(this,'Comment notifications')"><div class="tslider"></div></label></div>
+        <div class="set-row"><div><div class="set-label">Validation Alerts</div><div class="set-desc">Notify when a professor validates your note</div></div>
+        <label class="toggle"><input type="checkbox" checked onchange="setToggle(this,'Validation alerts')"><div class="tslider"></div></label></div>
+        <div class="set-row" style="border-bottom:none"><div><div class="set-label">New Note Alerts</div><div class="set-desc">When new notes are added to your subjects</div></div>
+        <label class="toggle"><input type="checkbox" onchange="setToggle(this,'New note alerts')"><div class="tslider"></div></label></div>
+      </div>
+      <div class="card" style="margin-bottom:14px">
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Privacy</div>
+        <div class="set-row"><div><div class="set-label">Public Profile</div><div class="set-desc">Allow others to view your profile</div></div>
+        <label class="toggle"><input type="checkbox" checked onchange="setToggle(this,'Public profile')"><div class="tslider"></div></label></div>
+        <div class="set-row" style="border-bottom:none"><div><div class="set-label">Allow Comments on My Notes</div></div>
+        <label class="toggle"><input type="checkbox" checked onchange="setToggle(this,'Comments allowed')"><div class="tslider"></div></label></div>
+      </div>
+      <div class="card">
+        <div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Account</div>
+        <div class="set-row"><div><div class="set-label">Change Password</div></div>
+        <button class="btn btn-sm" onclick="toast('Password reset email sent!','success')">Change</button></div>
+        <div class="set-row"><div><div class="set-label">Export My Data</div><div class="set-desc">Download all your notes and data</div></div>
+        <button class="btn btn-sm" onclick="exportData()">Export</button></div>
+        <div class="set-row" style="border-bottom:none"><div><div class="set-label">Delete Account</div><div class="set-desc">Permanently remove your account</div></div>
+        <button class="btn btn-sm btn-danger" onclick="toast('Deletion requires email confirmation','danger')">Delete</button></div>
+      </div>
+    </div>
+
+  </div>
+</main>
+</div><!-- /appShell -->
+
+<!-- ════ NOTE VIEWER MODAL ════════════════════════════════════════════════════ -->
+<div class="backdrop hidden" id="viewerModal">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div style="flex:1;min-width:0">
+        <div class="modal-title" id="v-title" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis"></div>
+        <div style="font-size:11.5px;color:var(--text3);margin-top:2px">By <span id="v-author"></span> · <span id="v-pages"></span> pages · <span id="v-saves"></span> saves</div>
+        <div id="v-hdr-badge" style="margin-top:7px"></div>
+      </div>
+      <button class="close-btn" onclick="closeModal('viewerModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <!-- Document -->
+      <div class="note-doc-shell"><div class="note-doc" id="v-doc"></div></div>
+      <!-- Validation Panel -->
+      <div id="v-valid-panel"></div>
+      <!-- Comments -->
+      <div>
+        <div class="cmt-hdr">
+          <div class="cmt-title">💬 Discussion</div>
+          <span class="cmt-count" id="cmt-badge">0</span>
+        </div>
+        <div class="cmt-input-row">
+          <textarea class="cmt-input" id="cmt-input" placeholder="Write a comment…"
+            onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();postComment()}"
+            oninput="autoH(this)"></textarea>
+          <button class="btn btn-primary btn-sm" onclick="postComment()">Post</button>
+        </div>
+        <div class="cmt-list" id="cmt-list"></div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" id="v-val-btn" onclick="handleValidate()"></button>
+      <button class="btn" onclick="downloadNote()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        DOWNLOAD
+      </button>
+      <button class="btn btn-primary" onclick="saveNote()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        SAVE NOTE
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- VALIDATE MODAL -->
+<div class="backdrop hidden" id="validateModal">
+  <div class="modal" style="max-width:440px">
+    <div class="modal-hdr"><div class="modal-title">Request Professor Validation</div><button class="close-btn" onclick="closeModal('validateModal')">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:12.5px;color:var(--text2);margin-bottom:16px">Select the professor who reviewed and approved this note.</p>
+      <div style="margin-bottom:14px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Validating Professor</label>
+      <select class="fc" id="profSelect">
+        <option value="">Choose professor…</option>
+        <option>Prof. R. Santos</option>
+        <option>Prof. L. Reyes</option>
+        <option>Prof. A. Cruz</option>
+        <option>Prof. M. Villanueva</option>
+        <option>Prof. J. Dela Torre</option>
+      </select></div>
+      <div><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Validation Date</label>
+      <input class="fc" id="valDate" type="date"/></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" onclick="closeModal('validateModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmValidation()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        Confirm Validation
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT PROFILE MODAL -->
+<div class="backdrop hidden" id="editModal">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-hdr"><div class="modal-title">Edit Profile</div><button class="close-btn" onclick="closeModal('editModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="margin-bottom:12px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Full Name</label><input class="fc" id="e-name" value="Mhike Aleen A. Gacusan"/></div>
+      <div style="margin-bottom:12px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Student ID</label><input class="fc" id="e-sid" value="2021-00123"/></div>
+      <div style="margin-bottom:12px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Email</label><input class="fc" id="e-email" type="email" value="mhike.gacusan@adnu.edu.ph"/></div>
+      <div style="margin-bottom:12px"><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">College</label><input class="fc" id="e-college" value="COLLEGE OF LIBERAL ARTS, SCIENCE & EDUCATION"/></div>
+      <div><label style="font-size:11.5px;color:var(--text3);display:block;margin-bottom:5px">Bio</label><textarea class="fc" id="e-bio" rows="3" style="resize:vertical">3rd year BSIT student passionate about notes sharing.</textarea></div>
+    </div>
+    <div class="modal-foot"><button class="btn" onclick="closeModal('editModal')">Cancel</button><button class="btn btn-primary" onclick="saveProfile()">Save Changes</button></div>
+  </div>
+</div>
+
+<!-- SHARE MODAL -->
+<div class="backdrop hidden" id="shareModal">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-hdr"><div class="modal-title">Share Note</div><button class="close-btn" onclick="closeModal('shareModal')">✕</button></div>
+    <div class="modal-body">
+      <p style="font-size:12.5px;color:var(--text2);margin-bottom:14px">Share "<span id="share-title"></span>"</p>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <input class="fc" id="share-link" readonly style="flex:1"/>
+        <button class="btn" onclick="copyLink()">Copy</button>
+      </div>
+      <p style="font-size:12px;color:var(--text3);margin-bottom:10px">Share directly to:</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-sm" onclick="toast('Opening Messenger…','info')">Facebook</button>
+        <button class="btn btn-sm" onclick="copyLink();toast('Copied for WhatsApp','success')">WhatsApp</button>
+        <button class="btn btn-sm" onclick="copyLink();toast('Copied for Telegram','success')">Telegram</button>
+        <button class="btn btn-sm" onclick="toast('Email share opened','info')">Email</button>
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn btn-primary" onclick="closeModal('shareModal');toast('Shared successfully!','success')">Done</button></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ================================================================
+   SECTION: SCRIPTS — All JavaScript for AugustinNOTES
+   See script.js for the standalone version
+   ================================================================ */
+
+/* ════ AUTH ══════════════════════════════════════════════════════════════════ */
+function doLogin(){
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const err   = document.getElementById('loginErr');
+
+  if(!email || !pass){
+    err.textContent = 'Please fill in all fields.';
+    err.style.display = 'block'; return;
+  }
+  // Demo credentials check
+  if(email !== 'student@adnu.edu.ph' || pass !== 'password123'){
+    err.textContent = 'Invalid credentials. Please try again.';
+    err.style.display = 'block';
+    document.getElementById('loginPass').value = '';
+    return;
+  }
+  err.style.display = 'none';
+  // set today as default validation date
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('valDate').value = today;
+  document.getElementById('loginScreen').classList.add('hidden');
+  document.getElementById('appShell').style.display = 'flex';
+  refreshStats(); renderNotesList(); renderRecent(); renderDashboard();
+  toast('Welcome back, Augustinian! 🎓','success');
+}
+
+function doLogout(){
+  if(!confirm('Are you sure you want to log out?')) return;
+  document.getElementById('appShell').style.display = 'none';
+  document.getElementById('loginScreen').classList.remove('hidden');
+  document.getElementById('loginPass').value = '';
+  document.getElementById('loginErr').style.display = 'none';
+  toast('Logged out successfully','info');
+}
+
+/* ════ DATA ══════════════════════════════════════════════════════════════════ */
+let NOTES = [
+  { id:1, title:'ITFE Module 7 Notes', subject:'ITFE – IT Fundamentals',
+    author:'Ben Marie Loyola', pages:4, rating:5, saves:18, saved:true, fav:true,
+    validated:true, validatedBy:'Prof. R. Santos', validatedAt:'2026-04-10',
+    comments:[
+      {id:101,user:'Juan D.',text:'Great notes! The OSI model breakdown is super clear.',ts:'Apr 11',likes:4,liked:false},
+      {id:102,user:'Maria C.',text:'Thanks for the protocol list — really helped in the exam.',ts:'Apr 12',likes:2,liked:false}
+    ]
+  },
+  { id:2, title:'APDEV Notes – React Fundamentals', subject:'APDEV – App Development',
+    author:'Ben Marie Loyola', pages:6, rating:4, saves:12, saved:false, fav:false,
+    validated:false, validatedBy:null, validatedAt:null,
+    comments:[
+      {id:201,user:'Carlo M.',text:'Can you add more on useEffect cleanup? That part confused me.',ts:'Apr 14',likes:1,liked:false}
+    ]
+  },
+  { id:3, title:'IT 333 Module 5 Exam Reviewer', subject:'IT 333 – Software Engineering',
+    author:'Ben Marie Loyola', pages:8, rating:5, saves:24, saved:true, fav:true,
+    validated:true, validatedBy:'Prof. L. Reyes', validatedAt:'2026-04-08',
+    comments:[
+      {id:301,user:'Ana P.',text:'This reviewer is gold. Passed because of this! 🙌',ts:'Apr 9',likes:9,liked:false},
+      {id:302,user:'Ben L.',text:'Behavioral patterns section is spot on.',ts:'Apr 9',likes:5,liked:false},
+      {id:303,user:'Rose T.',text:'Could you add UML diagrams in the next version?',ts:'Apr 10',likes:3,liked:false}
+    ]
+  },
+  { id:4, title:'ITE Exam Note Review', subject:'EXAM REVIEW',
+    author:'Ben Marie Loyola', pages:9, rating:4, saves:11, saved:false, fav:false,
+    validated:false, validatedBy:null, validatedAt:null,
+    comments:[]
+  },
+  { id:5, title:'CS Fundamentals – Module 1: Introduction to Programming', subject:'ITFE – IT Fundamentals',
+    author:'Prof. R. Santos', pages:5, rating:5, saves:30, saved:false, fav:false,
+    validated:true, validatedBy:'Prof. R. Santos', validatedAt:'2026-05-01',
+    comments:[
+      {id:501,user:'Mhike G.',text:'This module is super clear — exactly what we need for the pre-finals!',ts:'May 2',likes:7,liked:false},
+      {id:502,user:'Ana P.',text:'The problem-solving steps section is really practical.',ts:'May 3',likes:4,liked:false}
+    ]
+  },
+  { id:6, title:'APDEV Module 3 – Database Design & SQL', subject:'APDEV – App Development',
+    author:'Prof. L. Reyes', pages:7, rating:5, saves:22, saved:false, fav:false,
+    validated:true, validatedBy:'Prof. L. Reyes', validatedAt:'2026-05-10',
+    comments:[
+      {id:601,user:'Carlo M.',text:'The normalization part finally clicked for me after reading this.',ts:'May 11',likes:6,liked:false}
+    ]
+  }
+];
+const CONTENT = {
+  1:`ITFE MODULE 7 – IT INFRASTRUCTURE FUNDAMENTALS
+Published by: Ben Marie Loyola
+✅ Validated by: Prof. R. Santos  (2026-04-10)
+
+───────────────────────────────────────
+CHAPTER 7: NETWORK FUNDAMENTALS
+───────────────────────────────────────
+
+I. INTRODUCTION TO NETWORKING
+   A network is a collection of computers and hardware interconnected
+   by communication channels that allow resource and data sharing.
+
+II. TYPES OF NETWORKS
+   1. LAN – Local Area Network  (office, home)
+   2. WAN – Wide Area Network   (the Internet)
+   3. MAN – Metropolitan Area Network (city-wide)
+
+III. OSI MODEL (7 Layers)
+   Layer 7: Application  – HTTP, FTP, SMTP
+   Layer 6: Presentation – Encryption, compression
+   Layer 5: Session      – Session management
+   Layer 4: Transport    – TCP, UDP
+   Layer 3: Network      – IP addressing, routing
+   Layer 2: Data Link    – MAC addresses, switches
+   Layer 1: Physical     – Cables, signals, hubs
+
+IV. KEY PROTOCOLS
+   • TCP/IP  – Transmission Control Protocol
+   • HTTP/S  – Secure Web Browsing
+   • FTP     – File Transfer Protocol
+   • DNS     – Domain Name System
+
+─────────────────────────────────
+END OF MODULE 7 – Good luck! 📚`,
+  2:`APDEV – APPLICATION DEVELOPMENT
+React Fundamentals Study Guide
+Published by: Ben Marie Loyola
+⏳ Pending professor validation
+
+I. WHAT IS REACT?
+   JavaScript library for building UIs. Developed by Meta.
+   Component-based, declarative, uses Virtual DOM.
+
+II. KEY CONCEPTS
+   1. Components – Functional (hooks) · Class (legacy)
+   2. JSX        – JavaScript XML syntax extension
+   3. Props      – Data parent → child (read-only)
+   4. State      – useState() hook, triggers re-render
+   5. Hooks      – useState, useEffect, useContext, useMemo
+
+III. LIFECYCLE (Functional)
+   Mount → Update → Unmount
+   useEffect(()=>{}, [])      – runs once on mount
+   useEffect(()=>{}, [dep])   – runs when dep changes`,
+  3:`IT 333 – SOFTWARE ENGINEERING
+Module 5 Exam Reviewer: Design Patterns
+Published by: Ben Marie Loyola
+✅ Validated by: Prof. L. Reyes  (2026-04-08)
+
+A. CREATIONAL PATTERNS
+   Singleton · Factory · Abstract Factory · Builder · Prototype
+
+B. STRUCTURAL PATTERNS
+   Adapter · Bridge · Composite · Decorator · Facade
+
+C. BEHAVIORAL PATTERNS
+   Observer · Strategy · Command · Iterator · Template Method
+
+EXAM TIPS
+   • Know the purpose of each pattern
+   • Identify which pattern to use given a scenario
+   • Distinguish Factory from Abstract Factory`,
+  4:`ITE BOARD EXAM REVIEW
+Data Structures & Algorithms
+Compiled by: Ben Marie Loyola
+⏳ Pending professor validation
+
+DATA STRUCTURES
+   Arrays     – O(1) access, O(n) search (unsorted)
+   Linked     – O(n) access, O(1) head insert
+   Stacks     – LIFO: push, pop, peek
+   Queues     – FIFO: enqueue, dequeue
+   Trees      – Binary, BST, AVL
+   Graphs     – BFS (Queue), DFS (Stack)
+
+SORTING
+   Bubble  O(n²)
+   Merge   O(n log n)
+   Quick   O(n log n) avg
+   Heap    O(n log n)`,
+  5:`CS FUNDAMENTALS – MODULE 1
+Introduction to Programming
+Course: ITFE – IT Fundamentals | 1st Semester, A.Y. 2026-2027
+Published by: Prof. R. Santos
+✅ Validated by: Prof. R. Santos (2026-05-01)
+
+────────────────────────────────────────────
+LEARNING OUTCOMES
+────────────────────────────────────────────
+By the end of this module, students will be able to:
+  1. Define programming and explain its role in computing
+  2. Identify the core concepts of any programming language
+  3. Trace and write simple algorithms using pseudocode
+  4. Classify programming paradigms and their use cases
+
+────────────────────────────────────────────
+I. WHAT IS PROGRAMMING?
+────────────────────────────────────────────
+Programming is the process of designing and writing instructions
+(source code) that a computer can interpret and execute to
+perform a specific task or solve a particular problem.
+
+A PROGRAM is a sequence of instructions stored in a file
+that the CPU reads and executes.
+
+Source Code → Compiler/Interpreter → Machine Code → Execution
+
+────────────────────────────────────────────
+II. CORE CONCEPTS
+────────────────────────────────────────────
+1. VARIABLE
+   A named memory location used to store a value.
+   Example: int age = 20;
+
+2. DATA TYPES
+   Integer  – Whole numbers (e.g., 5, -3, 100)
+   Float    – Decimal numbers (e.g., 3.14, -0.5)
+   String   – Text (e.g., "Hello")
+   Boolean  – True or False
+   Array    – Collection of same-type values
+
+3. OPERATORS
+   Arithmetic : + - * / % (modulo)
+   Relational : == != > < >= <=
+   Logical    : && (AND)  || (OR)  ! (NOT)
+
+4. CONTROL FLOW
+   a. Sequence    – Execute line by line, top to bottom
+   b. Selection   – if / else if / else / switch
+   c. Repetition  – for loop / while loop / do-while loop
+
+5. FUNCTIONS (Procedures / Methods)
+   A reusable block of code that performs a specific task.
+   Has: name, parameters (input), return type (output)
+
+6. ARRAYS
+   A fixed-size, ordered collection of elements of the same type.
+   Index starts at 0. Example: int scores[5] = {90,85,78,92,88};
+
+────────────────────────────────────────────
+III. PROGRAMMING PARADIGMS
+────────────────────────────────────────────
+• Procedural    – Top-down approach; uses functions & procedures
+                  Languages: C, Pascal
+• Object-Oriented (OOP) – Models using Classes and Objects
+                  Pillars: Encapsulation, Inheritance,
+                           Polymorphism, Abstraction
+                  Languages: Java, C++, Python
+• Functional    – Treats computation as math functions; avoids
+                  side effects. Languages: Haskell, Erlang
+• Declarative   – Describes WHAT to do, not HOW
+                  Languages: SQL, HTML, CSS
+
+────────────────────────────────────────────
+IV. ALGORITHM & PROBLEM SOLVING
+────────────────────────────────────────────
+An ALGORITHM is a step-by-step, finite set of well-defined
+instructions to solve a problem.
+
+Properties of a good algorithm:
+  • Input       – Accepts zero or more inputs
+  • Output      – Produces at least one output
+  • Definiteness– Each step is precisely defined
+  • Finiteness  – Terminates after a finite number of steps
+  • Effectiveness– Steps are basic enough to be carried out
+
+Problem-Solving Steps:
+  1. Understand the problem
+  2. Identify inputs and outputs
+  3. Design the algorithm (pseudocode/flowchart)
+  4. Code the solution
+  5. Test with sample data
+  6. Debug and optimize
+
+────────────────────────────────────────────
+V. PSEUDOCODE EXAMPLE
+────────────────────────────────────────────
+Problem: Find the largest of three numbers A, B, C
+
+  BEGIN
+    INPUT A, B, C
+    SET largest = A
+    IF B > largest THEN SET largest = B
+    IF C > largest THEN SET largest = C
+    OUTPUT "Largest is: ", largest
+  END
+
+────────────────────────────────────────────
+END OF MODULE 1 — Study hard, Augustinians! 🎓`,
+  6:`APDEV – MODULE 3
+Database Design & Structured Query Language (SQL)
+Course: APDEV – App Development | 2nd Semester, A.Y. 2026-2027
+Published by: Prof. L. Reyes
+✅ Validated by: Prof. L. Reyes (2026-05-10)
+
+────────────────────────────────────────────
+I. DATABASE FUNDAMENTALS
+────────────────────────────────────────────
+A DATABASE is an organized collection of structured data
+stored electronically and managed by a DBMS.
+
+DBMS Examples: MySQL, PostgreSQL, SQLite, Oracle, MS SQL Server
+
+Key Terms:
+  Table   – A set of rows and columns (like a spreadsheet)
+  Row     – A single record / tuple
+  Column  – An attribute / field
+  Primary Key (PK) – Uniquely identifies each row
+  Foreign Key (FK) – References the PK of another table
+
+────────────────────────────────────────────
+II. DATABASE NORMALIZATION
+────────────────────────────────────────────
+Normalization removes data redundancy and ensures integrity.
+
+1NF (First Normal Form)
+  – Atomic values; no repeating groups
+
+2NF (Second Normal Form)
+  – 1NF + no partial dependencies (applies to composite PKs)
+
+3NF (Third Normal Form)
+  – 2NF + no transitive dependencies
+  – Non-key attributes depend ONLY on the PK
+
+────────────────────────────────────────────
+III. SQL COMMANDS
+────────────────────────────────────────────
+DDL – Data Definition Language
+  CREATE TABLE students (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    grade FLOAT
+  );
+  ALTER TABLE ... / DROP TABLE ...
+
+DML – Data Manipulation Language
+  INSERT INTO students (name, grade) VALUES ('Ana', 95.5);
+  SELECT * FROM students WHERE grade >= 90 ORDER BY name;
+  UPDATE students SET grade = 98 WHERE id = 1;
+  DELETE FROM students WHERE id = 3;
+
+DCL – Data Control Language
+  GRANT SELECT ON students TO 'user'@'localhost';
+  REVOKE INSERT ON students FROM 'user'@'localhost';
+
+────────────────────────────────────────────
+IV. JOINS
+────────────────────────────────────────────
+INNER JOIN  – Returns rows with matching values in both tables
+LEFT JOIN   – All rows from left table + matches from right
+RIGHT JOIN  – All rows from right table + matches from left
+FULL JOIN   – All rows when there is a match in either table
+
+Example:
+  SELECT s.name, e.course
+  FROM students s
+  INNER JOIN enrollments e ON s.id = e.student_id;
+
+────────────────────────────────────────────
+END OF MODULE 3 — Good luck on your project! 💻`
+};
+
+let SAVED = [1,3];
+let sharedCt = 7;
+let curNote  = null;
+let curPage  = 'home';
+let activeTab= 'all';
+let theme    = 'dark';
+let upFile   = null;
+let nextCmtId = 1000;
+
+/* ════ INIT — runs after login ═══════════════════════════════════════════════ */
+// Warm up theme on page load so login screen matches
+(function warmTheme(){
+  applyThemeBtns();
+})();
+
+/* ════ THEME ═════════════════════════════════════════════════════════════════ */
+function toggleTheme(){ setTheme(theme==='dark'?'light':'dark'); }
+function setTheme(t){
+  theme=t;
+  document.documentElement.setAttribute('data-theme',t);
+  const btn=document.getElementById('themeBtn');
+  const tip=document.getElementById('themeTip');
+  btn.textContent=t==='dark'?'☀️':'🌙';
+  tip.textContent=t==='dark'?'Switch to Light':'Switch to Dark';
+  applyThemeBtns();
+  toast('Theme: '+(t==='light'?'☀️ Light':'🌙 Dark'),'info');
+}
+function applyThemeBtns(){
+  const db=document.getElementById('btn-dark');
+  const lb=document.getElementById('btn-light');
+  if(!db||!lb) return;
+  db.className=theme==='dark'?'btn btn-sm btn-primary':'btn btn-sm';
+  lb.className=theme==='light'?'btn btn-sm btn-primary':'btn btn-sm';
+}
+
+/* ════ NAVIGATION ════════════════════════════════════════════════════════════ */
+function go(page){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+page).classList.add('active');
+  const nb=document.getElementById('nav-'+page);
+  if(nb) nb.classList.add('active');
+  const titles={home:'Home',dashboard:'Dashboard',upload:'Upload Notes',profile:'My Profile',settings:'Settings',study:'AI Study'};
+  document.getElementById('pageTitle').textContent=titles[page]||page;
+  curPage=page;
+  document.getElementById('searchInput').value='';
+  if(page==='home'){renderNotesList();renderRecent();}
+  if(page==='dashboard') renderDashboard();
+  if(page==='study') study_refreshNoteSelector();
+}
+
+/* ════ TABS ══════════════════════════════════════════════════════════════════ */
+function switchTab(el,tab){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  activeTab=tab; renderNotesList();
+}
+
+/* ════ HELPERS ═══════════════════════════════════════════════════════════════ */
+function totalComments(){ return NOTES.reduce((a,n)=>a+(n.comments?n.comments.length:0),0); }
+function validCount(){ return NOTES.filter(n=>n.validated).length; }
+function esc(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+function autoH(el){ el.style.height=''; el.style.height=Math.min(el.scrollHeight,90)+'px'; }
+
+function validBadge(n){
+  return n.validated
+    ? `<span class="valid-badge"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> Validated · ${n.validatedBy}</span>`
+    : `<span class="pend-badge">⏳ Pending Validation</span>`;
+}
+
+/* ════ STATS ═════════════════════════════════════════════════════════════════ */
+function refreshStats(){
+  const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('st-saved', SAVED.length);  set('ps-saved', SAVED.length);
+  set('st-shared',sharedCt);      set('ps-shared',sharedCt);
+  set('st-valid', validCount());   set('ps-valid', validCount());
+  set('st-cmts',  totalComments());
+}
+
+/* ════ RENDER NOTES LIST ═════════════════════════════════════════════════════ */
+function getFiltered(){
+  const q=document.getElementById('searchInput').value.toLowerCase();
+  let list=NOTES;
+  if(activeTab==='validated') list=NOTES.filter(n=>n.validated);
+  if(activeTab==='fav')       list=NOTES.filter(n=>SAVED.includes(n.id));
+  if(activeTab==='top')       list=NOTES.filter(n=>n.rating>=5);
+  if(q) list=list.filter(n=>(n.title+n.subject+n.author).toLowerCase().includes(q));
+  return list;
+}
+function renderNotesList(){
+  const list=getFiltered();
+  const c=document.getElementById('notes-list');
+  if(!list.length){ c.innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px">No notes match this filter.</div>'; return; }
+  c.innerHTML=list.map(n=>`
+    <div class="note-card fade-up" onclick="openViewer(${n.id})">
+      <div style="width:34px;height:34px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      </div>
+      <div class="note-info">
+        <div class="note-title">${esc(n.title)}</div>
+        <div class="note-sub">${esc(n.subject)} · ${esc(n.author)}</div>
+        <div class="note-badges-row">
+          ${validBadge(n)}
+          <span class="badge">${n.pages} pp</span>
+          <span class="badge">💬 ${n.comments.length}</span>
+          <div class="stars">${'★'.repeat(n.rating)}${'☆'.repeat(5-n.rating)}</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:7px;flex-shrink:0">
+        <span style="font-size:11px;color:var(--text3)">${n.saves} saves</span>
+        <div style="display:flex;gap:6px">
+          <button class="btn btn-sm" onclick="event.stopPropagation();openShare(${n.id})">Share</button>
+          <button class="btn btn-sm ${SAVED.includes(n.id)?'btn-success':''}" id="sbtn-${n.id}"
+            onclick="event.stopPropagation();toggleSave(${n.id})">${SAVED.includes(n.id)?'✓ Saved':'Save'}</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+function renderRecent(){
+  document.getElementById('recent-list').innerHTML=NOTES.slice(0,3).map(n=>`
+    <div class="note-card" onclick="openViewer(${n.id})">
+      <div class="note-info">
+        <div class="note-title">${esc(n.title)}</div>
+        <div class="note-sub">${esc(n.author)} · ${n.pages} pp</div>
+        <div class="note-badges-row" style="margin-top:5px">${validBadge(n)}</div>
+      </div>
+      <button class="btn btn-sm" onclick="event.stopPropagation();dlNote(${n.id})">Download</button>
+    </div>`).join('');
+}
+
+/* ════ DASHBOARD ═════════════════════════════════════════════════════════════ */
+function renderDashboard(){
+  document.getElementById('note-count').textContent=NOTES.length+' notes';
+  document.getElementById('dash-tbody').innerHTML=NOTES.map((n,i)=>`
+    <tr>
+      <td style="color:var(--text3)">${i+1}</td>
+      <td><div style="font-weight:600;font-size:12.5px">${esc(n.title)}</div><div style="font-size:11px;color:var(--text3);margin-top:1px">${esc(n.subject)}</div></td>
+      <td style="color:var(--text2);font-size:12.5px">${esc(n.author)}</td>
+      <td>${validBadge(n)}</td>
+      <td><span class="badge">💬 ${n.comments.length}</span></td>
+      <td><div class="actions-cell">
+        <button class="btn btn-sm" onclick="openViewer(${n.id})">View</button>
+        <button class="btn btn-sm" onclick="openShare(${n.id})">Share</button>
+        <button class="btn btn-sm ${n.validated?'btn-warn':''}" onclick="${n.validated?`dashRemoveVal(${n.id})`:`dashReqVal(${n.id})`}">${n.validated?'✅ Unvalidate':'Validate'}</button>
+        <button class="btn btn-sm" onclick="dlNote(${n.id})"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+        <button class="btn btn-sm btn-danger" onclick="deleteNote(${n.id},this)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg></button>
+      </div></td>
+    </tr>`).join('');
+}
+
+/* ════ NOTE VIEWER ═══════════════════════════════════════════════════════════ */
+function openViewer(id){
+  const n=NOTES.find(x=>x.id===id); if(!n) return;
+  curNote=n;
+  document.getElementById('v-title').textContent=n.title;
+  document.getElementById('v-author').textContent=n.author;
+  document.getElementById('v-pages').textContent=n.pages;
+  document.getElementById('v-saves').textContent=n.saves;
+  document.getElementById('v-doc').textContent=CONTENT[id]||'Content not available.';
+  document.getElementById('v-hdr-badge').innerHTML=validBadge(n);
+  renderValidPanel(n);
+  renderComments(n);
+  document.getElementById('cmt-input').value='';
+  // Validate button
+  const vb=document.getElementById('v-val-btn');
+  if(n.validated){
+    vb.className='btn btn-warn';
+    vb.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg> Remove Validation';
+  } else {
+    vb.className='btn';
+    vb.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Request Validation';
+  }
+  document.getElementById('viewerModal').classList.remove('hidden');
+}
+
+/* ── Validation Panel ─────────────────────────────────────────────────────── */
+function renderValidPanel(n){
+  const el=document.getElementById('v-valid-panel');
+  if(n.validated){
+    el.innerHTML=`
+      <div class="valid-panel ok fade-up" style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="valid-icon ok-bg">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--valid-tx)" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--valid-tx);font-size:13px">✅ Validated by ${esc(n.validatedBy)}</div>
+            <div style="color:var(--text3);font-size:11.5px;margin-top:2px">Approved on ${n.validatedAt} · This note meets academic standards</div>
+          </div>
+        </div>
+        <button class="btn btn-sm btn-warn" onclick="reqRemoveVal()">Remove</button>
+      </div>`;
+  } else {
+    el.innerHTML=`
+      <div class="valid-panel pend fade-up" style="margin-bottom:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div class="valid-icon pend-bg">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--pend-tx)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div style="font-weight:700;color:var(--pend-tx);font-size:13px">⏳ Pending Validation</div>
+            <div style="color:var(--text3);font-size:11.5px;margin-top:2px">Not yet reviewed by a professor</div>
+          </div>
+        </div>
+        <button class="btn btn-sm" onclick="handleValidate()">Request Now</button>
+      </div>`;
+  }
+}
+
+/* ── Comments ──────────────────────────────────────────────────────────────── */
+function renderComments(n){
+  const list=document.getElementById('cmt-list');
+  const badge=document.getElementById('cmt-badge');
+  const cmts=n.comments||[];
+  badge.textContent=cmts.length;
+  if(!cmts.length){ list.innerHTML='<div class="no-cmt">No comments yet. Start the discussion! 💬</div>'; return; }
+  list.innerHTML=cmts.map(c=>cmtHTML(c)).join('');
+}
+function cmtHTML(c){
+  return `<div class="cmt-item fade-up" id="cmt-${c.id}">
+    <div class="cmt-row1">
+      <div class="cmt-user-wrap">
+        <div class="cmt-avatar">${c.user.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2)}</div>
+        <span class="cmt-user">${esc(c.user)}</span>
+      </div>
+      <span class="cmt-ts">${c.ts}</span>
+    </div>
+    <div class="cmt-text">${esc(c.text)}</div>
+    <div class="cmt-actions">
+      <button class="like-btn ${c.liked?'liked':''}" id="lb-${c.id}" onclick="likeComment(${c.id})">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        <span id="lc-${c.id}">${c.likes}</span>
+      </button>
+      <button class="del-cmt" onclick="delComment(${c.id})">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg> Delete
+      </button>
+    </div>
+  </div>`;
+}
+function postComment(){
+  if(!curNote) return;
+  const inp=document.getElementById('cmt-input');
+  const text=inp.value.trim();
+  if(!text){ toast('Comment cannot be empty','danger'); return; }
+  const now=new Date();
+  const ts=now.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  const c={id:++nextCmtId,user:'Mhike A.',text,ts,likes:0,liked:false};
+  curNote.comments.push(c);
+  const list=document.getElementById('cmt-list');
+  const noEl=list.querySelector('.no-cmt');
+  if(noEl) noEl.remove();
+  const div=document.createElement('div');
+  div.innerHTML=cmtHTML(c);
+  list.appendChild(div.firstElementChild);
+  document.getElementById('cmt-badge').textContent=curNote.comments.length;
+  inp.value=''; inp.style.height='';
+  refreshStats(); renderDashboard();
+  toast('Comment posted!','success');
+}
+function likeComment(cid){
+  if(!curNote) return;
+  const c=curNote.comments.find(x=>x.id===cid); if(!c) return;
+  if(c.liked){ c.likes--; c.liked=false; }
+  else { c.likes++; c.liked=true; }
+  const lc=document.getElementById('lc-'+cid);
+  const lb=document.getElementById('lb-'+cid);
+  if(lc) lc.textContent=c.likes;
+  if(lb) lb.classList.toggle('liked',c.liked);
+}
+function delComment(cid){
+  if(!curNote) return;
+  curNote.comments=curNote.comments.filter(x=>x.id!==cid);
+  const el=document.getElementById('cmt-'+cid);
+  if(el){ el.style.opacity='0'; el.style.transform='translateX(10px)'; el.style.transition='all .2s'; setTimeout(()=>el.remove(),200); }
+  document.getElementById('cmt-badge').textContent=curNote.comments.length;
+  refreshStats(); renderDashboard();
+  toast('Comment deleted','info');
+}
+
+/* ── Validation ────────────────────────────────────────────────────────────── */
+function handleValidate(){
+  if(!curNote) return;
+  if(curNote.validated){ reqRemoveVal(); } else { document.getElementById('validateModal').classList.remove('hidden'); }
+}
+function confirmValidation(){
+  const prof=document.getElementById('profSelect').value;
+  const date=document.getElementById('valDate').value;
+  if(!prof){ toast('Please select a professor','danger'); return; }
+  if(!curNote) return;
+  curNote.validated=true; curNote.validatedBy=prof; curNote.validatedAt=date||new Date().toISOString().split('T')[0];
+  closeModal('validateModal');
+  // update viewer
+  document.getElementById('v-hdr-badge').innerHTML=validBadge(curNote);
+  renderValidPanel(curNote);
+  const vb=document.getElementById('v-val-btn');
+  vb.className='btn btn-warn';
+  vb.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg> Remove Validation';
+  refreshStats(); renderNotesList(); renderDashboard();
+  toast('Note validated by '+prof+' ✅','success');
+}
+function reqRemoveVal(){
+  if(!curNote||!curNote.validated) return;
+  if(!confirm('Remove validation from this note?')) return;
+  curNote.validated=false; curNote.validatedBy=null; curNote.validatedAt=null;
+  document.getElementById('v-hdr-badge').innerHTML=validBadge(curNote);
+  renderValidPanel(curNote);
+  const vb=document.getElementById('v-val-btn');
+  vb.className='btn';
+  vb.innerHTML='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Request Validation';
+  refreshStats(); renderNotesList(); renderDashboard();
+  toast('Validation removed','info');
+}
+function dashReqVal(id){
+  const n=NOTES.find(x=>x.id===id); if(!n) return;
+  curNote=n; document.getElementById('validateModal').classList.remove('hidden');
+}
+function dashRemoveVal(id){
+  const n=NOTES.find(x=>x.id===id); if(!n||!n.validated) return;
+  if(!confirm('Remove validation from "'+n.title+'"?')) return;
+  n.validated=false; n.validatedBy=null; n.validatedAt=null;
+  refreshStats(); renderDashboard(); renderNotesList();
+  toast('Validation removed','info');
+}
+
+/* ════ SAVE / DOWNLOAD / DELETE / SHARE ══════════════════════════════════════ */
+function saveNote(){
+  if(!curNote) return;
+  if(!SAVED.includes(curNote.id)){
+    SAVED.push(curNote.id); curNote.saves++;
+    const btn=document.getElementById('sbtn-'+curNote.id);
+    if(btn){btn.textContent='✓ Saved';btn.classList.add('btn-success');}
+    document.getElementById('v-saves').textContent=curNote.saves;
+    refreshStats();
+    toast('Note saved to your collection! 📌','success');
+  } else { toast('Already in your saved notes','info'); }
+}
+function toggleSave(id){
+  if(SAVED.includes(id)){
+    SAVED=SAVED.filter(x=>x!==id);
+    const n=NOTES.find(x=>x.id===id); if(n) n.saves=Math.max(0,n.saves-1);
+    const btn=document.getElementById('sbtn-'+id);
+    if(btn){btn.textContent='Save';btn.classList.remove('btn-success');}
+    toast('Removed from saved notes','info');
+  } else {
+    SAVED.push(id);
+    const n=NOTES.find(x=>x.id===id); if(n) n.saves++;
+    const btn=document.getElementById('sbtn-'+id);
+    if(btn){btn.textContent='✓ Saved';btn.classList.add('btn-success');}
+    toast('Note saved! 📌','success');
+  }
+  refreshStats();
+}
+function downloadNote(){ if(curNote) dlNote(curNote.id); }
+function dlNote(id){
+  const n=NOTES.find(x=>x.id===id); if(!n) return;
+  const text=CONTENT[id]||n.title;
+  const blob=new Blob([text],{type:'text/plain'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=n.title.replace(/\s+/g,'-')+'.txt';
+  a.click(); URL.revokeObjectURL(a.href);
+  toast('Download started: '+n.title,'success');
+}
+function deleteNote(id,btn){
+  if(!confirm('Remove "'+NOTES.find(n=>n.id===id)?.title+'" from your list?')) return;
+  const row=btn.closest('tr');
+  row.style.opacity='0'; row.style.transition='opacity .25s';
+  setTimeout(()=>{
+    NOTES=NOTES.filter(n=>n.id!==id);
+    SAVED=SAVED.filter(x=>x!==id);
+    row.remove();
+    document.getElementById('note-count').textContent=NOTES.length+' notes';
+    refreshStats(); renderNotesList();
+    toast('Note deleted','danger');
+  },260);
+}
+function openShare(id){
+  const n=NOTES.find(x=>x.id===id)||curNote; if(!n) return;
+  document.getElementById('share-title').textContent=n.title;
+  document.getElementById('share-link').value='https://augustinnotes.adnu.edu.ph/note/'+encodeURIComponent(n.title.toLowerCase().replace(/\s+/g,'-'));
+  sharedCt++; refreshStats();
+  document.getElementById('shareModal').classList.remove('hidden');
+}
+function copyLink(){
+  const v=document.getElementById('share-link').value;
+  navigator.clipboard.writeText(v).catch(()=>{document.getElementById('share-link').select();document.execCommand('copy');});
+  toast('Link copied to clipboard!','success');
+}
+function shareProfile(){
+  navigator.clipboard.writeText('https://augustinnotes.adnu.edu.ph/profile/mhike-gacusan')
+    .catch(()=>{}).finally(()=>toast('Profile link copied!','success'));
+}
+
+/* ════ UPLOAD ════════════════════════════════════════════════════════════════ */
+function fileSelected(inp){
+  const f=inp.files[0]; if(!f) return;
+  if(f.size>200*1024*1024){ toast('File too large! Max 200 MB','danger'); return; }
+  upFile={name:f.name.replace(/\.[^.]+$/,''),content:''};
+  document.getElementById('up-fname').textContent='📎 '+f.name+' ('+(f.size/1048576).toFixed(1)+' MB)';
+  if(!document.getElementById('noteTitle').value) document.getElementById('noteTitle').value=upFile.name;
+  if(f.type==='text/plain'||f.name.endsWith('.txt')){
+    const r=new FileReader(); r.onload=e=>{upFile.content=e.target.result;}; r.readAsText(f);
+  }
+}
+function handleDrop(e){
+  e.preventDefault(); document.getElementById('dropZone').classList.remove('over');
+  const f=e.dataTransfer.files[0]; if(!f) return;
+  if(f.size>200*1024*1024){ toast('File too large! Max 200 MB','danger'); return; }
+  upFile={name:f.name.replace(/\.[^.]+$/,''),content:''};
+  document.getElementById('up-fname').textContent='📎 '+f.name+' ('+(f.size/1048576).toFixed(1)+' MB)';
+  document.getElementById('noteTitle').value=upFile.name;
+}
+function startUpload(){
+  const title=document.getElementById('noteTitle').value.trim();
+  if(!title){ toast('Please enter a note title','danger'); return; }
+  const btn=document.getElementById('upBtn');
+  const wrap=document.getElementById('prog-wrap');
+  const fill=document.getElementById('prog-fill');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spinner"></span> Uploading…';
+  wrap.style.display='block';
+  let p=0;
+  const iv=setInterval(()=>{
+    p+=Math.random()*18+4;
+    if(p>=100){ p=100; clearInterval(iv); finishUpload(title,btn,wrap,fill); }
+    fill.style.width=p+'%';
+  },80);
+}
+function finishUpload(title,btn,wrap,fill){
+  const subj=document.getElementById('noteSubject').value||'General';
+  const newNote={
+    id:Date.now(),title,subject:subj,
+    author:'Mhike Aleen A. Gacusan',
+    pages:Math.floor(Math.random()*10)+2,
+    rating:5,saves:0,saved:true,fav:false,
+    validated:false,validatedBy:null,validatedAt:null,
+    comments:[]
+  };
+  NOTES.push(newNote); SAVED.push(newNote.id);
+  btn.disabled=false;
+  btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg> UPLOAD FILE';
+  wrap.style.display='none'; fill.style.width='0%';
+  document.getElementById('noteTitle').value='';
+  document.getElementById('noteSubject').value='';
+  document.getElementById('up-fname').textContent='';
+  document.getElementById('fileInput').value='';
+  upFile=null;
+  CONTENT[newNote.id]=`${title}\n\nPublished by: Mhike Aleen A. Gacusan\nSubject: ${subj}\n⏳ Pending professor validation\n\n[Full content available after processing]`;
+  refreshStats(); renderDashboard(); renderNotesList();
+  toast('"'+title+'" uploaded successfully! 🎉','success');
+  setTimeout(()=>go('dashboard'),700);
+}
+
+/* ════ SEARCH ════════════════════════════════════════════════════════════════ */
+function onSearch(){
+  if(curPage==='home') renderNotesList();
+  if(curPage==='dashboard'){
+    const q=document.getElementById('searchInput').value.toLowerCase();
+    document.querySelectorAll('#dash-tbody tr').forEach(r=>{ r.style.display=r.textContent.toLowerCase().includes(q)?'':'none'; });
+  }
+}
+
+/* ════ PROFILE ═══════════════════════════════════════════════════════════════ */
+function openEditModal(){ document.getElementById('editModal').classList.remove('hidden'); }
+function saveProfile(){
+  const name=document.getElementById('e-name').value.trim();
+  if(!name){ toast('Name cannot be empty','danger'); return; }
+  document.getElementById('profName').textContent=name;
+  const ini=name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+  document.getElementById('profAvatar').textContent=ini;
+  document.getElementById('avtr').textContent=ini;
+  closeModal('editModal');
+  toast('Profile updated!','success');
+}
+
+/* ════ SETTINGS ══════════════════════════════════════════════════════════════ */
+function setToggle(el,label){ toast(label+' '+(el.checked?'enabled':'disabled'),'info'); }
+function exportData(){
+  const data={notes:NOTES,saved:SAVED,exported:new Date().toISOString()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='AugustinNOTES-export.json'; a.click(); URL.revokeObjectURL(a.href);
+  toast('Data exported successfully!','success');
+}
+
+/* ════ AI STUDY ══════════════════════════════════════════════════════════════ */
+let studyNoteId   = null;
+let studyCards    = [];
+let studyCurIdx   = 0;
+let studyKnown    = new Set();
+let studyUnknown  = new Set();
+
+function study_refreshNoteSelector(){
+  const sel = document.getElementById('study-note-select');
+  const prev = sel.value;
+  sel.innerHTML = '<option value="">Choose a note / module…</option>';
+  NOTES.forEach(n=>{
+    sel.innerHTML += `<option value="${n.id}">${esc(n.title)} — ${esc(n.subject)}</option>`;
+  });
+  if(prev) sel.value = prev;
+}
+
+function onStudyNoteSelect(){
+  const id = parseInt(document.getElementById('study-note-select').value);
+  if(!id){
+    studyNoteId = null;
+    document.getElementById('study-selected-info').style.display = 'none';
+    setStudyBtns(true); return;
+  }
+  studyNoteId = id;
+  const n = NOTES.find(x=>x.id===id); if(!n) return;
+  document.getElementById('study-sel-title').textContent = n.title;
+  document.getElementById('study-sel-meta').textContent  =
+    `${n.subject} · ${n.author} · ${n.pages} pages · ${n.validated?'✅ Validated':'⏳ Pending Validation'}`;
+  document.getElementById('study-selected-info').style.display = 'block';
+  setStudyBtns(false);
+  clearStudy();
+}
+
+function setStudyBtns(disabled){
+  document.getElementById('btn-gen-reviewer').disabled = disabled;
+  document.getElementById('btn-gen-quizlet').disabled  = disabled;
+}
+
+function clearStudy(){
+  document.getElementById('study-results').style.display = 'none';
+  document.getElementById('study-empty').style.display   = 'flex';
+  studyCards = []; studyCurIdx = 0;
+  studyKnown.clear(); studyUnknown.clear();
+  switchStudyTab('reviewer');
+}
+
+function switchStudyTab(tab){
+  ['reviewer','quizlet','study'].forEach(t=>{
+    document.getElementById('stab-'+t).classList.toggle('active', t===tab);
+  });
+  document.getElementById('reviewer-shell').classList.toggle('active', tab==='reviewer');
+  document.getElementById('quizlet-shell').classList.toggle('active',  tab==='quizlet');
+  document.getElementById('study-shell').classList.toggle('active',    tab==='study');
+}
+
+function showAILoading(show){
+  document.getElementById('ai-loading').classList.toggle('active', show);
+  if(show){
+    document.getElementById('study-results').style.display = 'none';
+    document.getElementById('study-empty').style.display   = 'none';
+    setStudyBtns(true);
+  } else {
+    setStudyBtns(studyNoteId===null);
+  }
+}
+
+async function generateReviewer(){
+  if(!studyNoteId){ toast('Please select a module first','danger'); return; }
+  const content = CONTENT[studyNoteId] || 'No content available.';
+  showAILoading(true);
+  try{
+    const resp = await fetch('https://openrouter.ai/api/v1/chat/completions',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer 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',
+        'HTTP-Referer':'https://rovannboboyacevedo-blip.github.io/AgustinoDemo',
+        'X-Title':'AugustinNOTES'
+      },
+      body:JSON.stringify({
+        model:'meta-llama/llama-3.3-8b-instruct:free',
+        max_tokens:1000,
+        messages:[
+          {role:'system',content:`You are an academic study assistant. Given lecture note content, return ONLY valid JSON with no markdown fences in this exact structure:\n{"summary":"2-3 sentence overview","definitions":[{"term":"...","meaning":"..."}],"highlights":["..."],"exam_tips":["..."]}\nInclude 4-8 definitions, 4-6 highlights, 3-5 exam_tips. Be concise and student-friendly.`},
+          {role:'user',content:`Generate a study reviewer for this module:\n\n${content}`}
+        ]
+      })
+    });
+    const data = await resp.json();
+    const raw  = data.choices?.[0]?.message?.content || '';
+    const parsed = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    showAILoading(false);
+    renderReviewer(parsed);
+    document.getElementById('study-results').style.display = 'block';
+    document.getElementById('study-empty').style.display   = 'none';
+    switchStudyTab('reviewer');
+    toast('Reviewer generated! 📋','success');
+  } catch(e){
+    showAILoading(false);
+    document.getElementById('study-empty').style.display = 'flex';
+    toast('AI generation failed — please try again','danger');
+  }
+}
+
+function renderReviewer(data){
+  let html='';
+  if(data.summary){
+    html+=`<div class="reviewer-section">
+      <div class="reviewer-section-title"><span></span>Module Summary</div>
+      <div class="summary-block">${esc(data.summary)}</div>
+    </div>`;
+  }
+  if(data.definitions&&data.definitions.length){
+    html+=`<div class="reviewer-section">
+      <div class="reviewer-section-title"><span></span>Key Terms &amp; Definitions</div>
+      ${data.definitions.map(d=>`
+        <div class="def-item">
+          <div class="def-term">${esc(d.term)}</div>
+          <div class="def-meaning">${esc(d.meaning)}</div>
+        </div>`).join('')}
+    </div>`;
+  }
+  if(data.highlights&&data.highlights.length){
+    html+=`<div class="reviewer-section">
+      <div class="reviewer-section-title"><span></span>Important Highlights</div>
+      ${data.highlights.map((h,i)=>`
+        <div class="highlight-item">
+          <div class="highlight-num">${i+1}</div>
+          <div class="highlight-text">${esc(h)}</div>
+        </div>`).join('')}
+    </div>`;
+  }
+  if(data.exam_tips&&data.exam_tips.length){
+    html+=`<div class="reviewer-section">
+      <div class="reviewer-section-title"><span></span>Exam Tips</div>
+      ${data.exam_tips.map(t=>`
+        <div class="highlight-item">
+          <div class="highlight-num">💡</div>
+          <div class="highlight-text">${esc(t)}</div>
+        </div>`).join('')}
+    </div>`;
+  }
+  document.getElementById('reviewer-content').innerHTML = html;
+}
+
+async function generateQuizlet(){
+  if(!studyNoteId){ toast('Please select a module first','danger'); return; }
+  const content = CONTENT[studyNoteId] || 'No content available.';
+  showAILoading(true);
+  try{
+    const resp = await fetch('https://openrouter.ai/api/v1/chat/completions',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':'Bearer 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',
+        'HTTP-Referer':'https://rovannboboyacevedo-blip.github.io/AgustinoDemo',
+        'X-Title':'AugustinNOTES'
+      },
+      body:JSON.stringify({
+        model:'meta-llama/llama-3.3-8b-instruct:free',
+        max_tokens:1000,
+        messages:[
+          {role:'system',content:`You are an academic study assistant. Given lecture note content, return ONLY a valid JSON array with no markdown fences:\n[{"q":"question text","a":"answer text"}]\nGenerate 8-12 flashcard pairs that test key concepts, definitions, and important details. Keep answers concise.`},
+          {role:'user',content:`Generate flashcards for this module:\n\n${content}`}
+        ]
+      })
+    });
+    const data = await resp.json();
+    const raw  = data.choices?.[0]?.message?.content || '';
+    const cards = JSON.parse(raw.replace(/```json|```/g,'').trim());
+    studyCards  = cards;
+    studyCurIdx = 0;
+    studyKnown.clear(); studyUnknown.clear();
+    showAILoading(false);
+    renderQuizlet(cards);
+    loadStudyCard();
+    document.getElementById('study-results').style.display = 'block';
+    document.getElementById('study-empty').style.display   = 'none';
+    switchStudyTab('quizlet');
+    toast('Quizlet generated! 🃏','success');
+  } catch(e){
+    showAILoading(false);
+    document.getElementById('study-empty').style.display = 'flex';
+    toast('AI generation failed — please try again','danger');
+  }
+}
+
+function renderQuizlet(cards){
+  document.getElementById('qz-count').textContent     = cards.length+' flashcards';
+  document.getElementById('qz-progress').textContent  = 'Click any card to reveal the answer';
+  document.getElementById('cards-grid').innerHTML = cards.map((c,i)=>`
+    <div class="flashcard fade-up" id="qcard-${i}" onclick="flipCard(this)">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <div class="fc-label">Question ${i+1}</div>
+          <div class="fc-question">${esc(c.q)}</div>
+          <div class="fc-hint">tap to flip</div>
+        </div>
+        <div class="flashcard-back">
+          <div class="fc-label">Answer</div>
+          <div class="fc-answer">${esc(c.a)}</div>
+          <div class="fc-hint">tap to flip</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function flipCard(el){ el.classList.toggle('flipped'); }
+
+function flipAllCards(){
+  const cards=[...document.querySelectorAll('#cards-grid .flashcard')];
+  const anyFlipped=cards.some(c=>c.classList.contains('flipped'));
+  cards.forEach(c=>c.classList.toggle('flipped',!anyFlipped));
+}
+
+function shuffleCards(){
+  for(let i=studyCards.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [studyCards[i],studyCards[j]]=[studyCards[j],studyCards[i]];
+  }
+  renderQuizlet(studyCards); loadStudyCard();
+  toast('Cards shuffled!','info');
+}
+
+/* Study Mode ─────────────────────────────────────────────────── */
+function loadStudyCard(){
+  if(!studyCards.length) return;
+  const c=studyCards[studyCurIdx];
+  document.getElementById('study-q-text').textContent  = c.q;
+  document.getElementById('study-a-text').textContent  = c.a;
+  document.getElementById('study-counter').textContent = `${studyCurIdx+1} / ${studyCards.length}`;
+  document.getElementById('study-big-card').classList.remove('flipped');
+  updateStudyScore();
+}
+
+function flipStudyCard(){
+  document.getElementById('study-big-card').classList.toggle('flipped');
+}
+
+function studyNext(){
+  if(studyCurIdx<studyCards.length-1){ studyCurIdx++; loadStudyCard(); }
+  else toast('You reached the last card! 🎉','info');
+}
+
+function studyPrev(){
+  if(studyCurIdx>0){ studyCurIdx--; loadStudyCard(); }
+}
+
+function markKnown(){
+  studyKnown.add(studyCurIdx); studyUnknown.delete(studyCurIdx);
+  updateStudyScore();
+  if(studyCurIdx<studyCards.length-1){ studyCurIdx++; loadStudyCard(); }
+  else toast('All cards reviewed! 🎓','success');
+}
+
+function markUnknown(){
+  studyUnknown.add(studyCurIdx); studyKnown.delete(studyCurIdx);
+  updateStudyScore();
+  if(studyCurIdx<studyCards.length-1){ studyCurIdx++; loadStudyCard(); }
+}
+
+function updateStudyScore(){
+  const line=document.getElementById('study-score-line');
+  const tot=studyKnown.size+studyUnknown.size;
+  line.textContent=tot>0?`✓ ${studyKnown.size} known · ↺ ${studyUnknown.size} to review`:'';
+}
+
+/* ════ MODALS ════════════════════════════════════════════════════════════════ */
+function closeModal(id){ document.getElementById(id).classList.add('hidden'); }
+document.addEventListener('click',e=>{
+  ['viewerModal','validateModal','editModal','shareModal'].forEach(id=>{
+    if(e.target===document.getElementById(id)) closeModal(id);
+  });
+});
+window.addEventListener('keydown',e=>{
+  if(e.key==='Escape') ['viewerModal','validateModal','editModal','shareModal'].forEach(closeModal);
+});
+
+/* ════ TOAST ═════════════════════════════════════════════════════════════════ */
+let _tt;
+function toast(msg,type='info'){
+  const t=document.getElementById('toast');
+  const ic={success:'✓',danger:'✕',info:'ℹ'};
+  const cl={success:'var(--success)',danger:'var(--danger)',info:'var(--text3)'};
+  t.innerHTML=`<span style="color:${cl[type]||cl.info};font-weight:700">${ic[type]}</span> ${msg}`;
+  t.classList.add('show');
+  clearTimeout(_tt); _tt=setTimeout(()=>t.classList.remove('show'),2800);
+}
+</script>
+</body>
+</html>
