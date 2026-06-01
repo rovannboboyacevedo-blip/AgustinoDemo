@@ -842,7 +842,7 @@ function exportData(){
 
 /* ════ AI STUDY ══════════════════════════════════════════════════════════════ */
 /* ⚠️  REPLACE THE VALUE BELOW WITH YOUR OPENROUTER API KEY                   */
-const OPENROUTER_API_KEY = 'YOUR_OPENROUTER_API_KEY';
+const OPENROUTER_API_KEY = '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';
 
 let studyNoteId   = null;
 let studyCards    = [];
